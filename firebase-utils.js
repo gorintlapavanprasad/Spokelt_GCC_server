@@ -5,8 +5,8 @@ const serviceAccount =  JSON.parse(process.env.FIREBASE_CRED); // Replace with y
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://spokeit-9f532-default-rtdb.firebaseio.com",
-  // storageBucket: "spokeit-9f532.appspot.com"
+  databaseURL: "https://spokeit-default-rtdb.firebaseio.com",
+  storageBucket: "https://console.firebase.google.com/project/spokeit/storage/spokeit.appspot.com/files"
 });
 
 module.exports = admin; // Export the admin instance
