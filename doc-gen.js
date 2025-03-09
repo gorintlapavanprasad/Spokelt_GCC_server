@@ -78,11 +78,11 @@ const fs = require("fs");
         const streamAsset = await pdfServices.getContent({asset: resultAsset});
 
         // Creates a write stream and copy stream asset's content to it
-        const outputFilePath = createOutputFilePath();
-        console.log(`Saving asset at ${outputFilePath}`);
+        // const outputFilePath = createOutputFilePath();
+        // console.log(`Saving asset at ${outputFilePath}`);
 
-        const writeStream = fs.createWriteStream(outputFilePath);
-        streamAsset.readStream.pipe(writeStream);
+        // const writeStream = fs.createWriteStream(outputFilePath);
+        // streamAsset.readStream.pipe(writeStream);
 
      
 
