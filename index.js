@@ -19,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
  
-app.use(express.json({ limit: '50mb' })); // Adjust the limit as needed
-app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Adjust the limit as needed
-const upload = multer({ dest: 'uploads/' }); // Temporary upload directory
+// app.use(express.json({ limit: '50mb' })); // Adjust the limit as needed
+// app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Adjust the limit as needed
+// const upload = multer({ dest: 'uploads/' }); // Temporary upload directory
 
 const outputDir = path.join(__dirname, 'converted-audio'); // Directory to save M4A files
 
@@ -53,11 +53,11 @@ app.post('/document-generation', async (req, res) => {
 
     const fileName = `${name}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}.pdf`;
  
-      const firebaseStorageUrl = await uploadPdfToFirebaseStorage(pdfBuffer, fileName);
-      res.send(`Document generated and uploaded successfully to: ${firebaseStorageUrl}`);
+      // const firebaseStorageUrl = await uploadPdfToFirebaseStorage(pdfBuffer, fileName);
+      // res.send(`Document generated and uploaded successfully to: ${firebaseStorageUrl}`);
  
-      // const gcsUrl = await uploadPdfToGCS(pdfBuffer, fileName);
-      // res.send(`Document generated and uploaded successfully to: ${gcsUrl}`);
+      const gcsUrl = await uploadPdfToGCS(pdfBuffer, fileName);
+      res.send(`Document generated and uploaded successfully to: ${gcsUrl}`);
   
  
   } catch (error) {
