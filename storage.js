@@ -4,7 +4,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 // Replace with your bucket name and service account key file path
-const bucketName = 'player_registration'; // Make sure this matches your actual bucket name
+const bucketName = 'signature_pdf'; // Make sure this matches your actual bucket name
 const keyFilename = JSON.parse(process.env.CLOUD_STORAGE);
 const storage = new Storage({ credentials: keyFilename });
 
