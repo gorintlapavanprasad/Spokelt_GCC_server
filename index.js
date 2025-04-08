@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 const { uploadPdfToGCS } = require('./storage');
 const { spokeitDigitalSignature } = require('./doc-gen');
 const { uploadPdfToFirebaseStorage } = require('./firebase-storage');
-const { getDocument, getAllDocuments, createDocument } = require('./firebase-firestore');
+const { getDocument, getAllDocuments, createDocument, sendDocument } = require('./firebase-firestore');
 const { convertAudioToM4A } = require('./audio-convert');
  
 
@@ -30,7 +30,7 @@ app.use((err, req, res, next) => {
 });
 
 app.post('/document-generation', async (req, res) => {
-  const { name, signature, date } = req.body;
+  const { name, email, signature, date } = req.body;
 
   if (!name || !date) {
     return res.status(400).send('Please provide all required fields');
@@ -48,10 +48,14 @@ app.post('/document-generation', async (req, res) => {
     const fileName = `${name}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}.pdf`;
  
       const firebaseStorageUrl = await uploadPdfToFirebaseStorage(pdfBuffer, fileName);
+      await sendDocument(email, pdfBuffer);
       res.send(`Document generated and uploaded successfully to: ${firebaseStorageUrl}`);
+
+      // email pdfBuffer to user
  
       // const gcsUrl = await uploadPdfToGCS(pdfBuffer, fileName);
       // res.send(`Document generated and uploaded successfully to: ${gcsUrl}`);
+
   
  
   } catch (error) {
