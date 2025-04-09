@@ -37,6 +37,8 @@ const getAllDocuments = async (collectionName) => {
 
 const sendDocument = async (email, fileBuffer) => {
   try {
+    const base64Pdf = fileBuffer.toString('base64');
+
     await firestore.collection('mail').add({
       to: email,
       message: {
@@ -69,7 +71,9 @@ The SpokeIt Team
 This email was sent automatically. If you believe you received it in error, please contact our support team.`,
         attachments: [{
           filename: 'SpokeIt Consent Form.pdf',
-          content: fileBuffer
+          content: base64Pdf,
+          encoding: 'base64',
+          contentType: 'application/pdf'
         }]
       }
     })
