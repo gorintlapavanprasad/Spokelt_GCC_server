@@ -35,10 +35,8 @@ const getAllDocuments = async (collectionName) => {
   }
 };
 
-const sendDocument = async (email, fileBuffer) => {
+const sendDocument = async (email, fileUrl) => {
   try {
-    const base64Pdf = fileBuffer.toString('base64');
-
     await firestore.collection('mail').add({
       to: email,
       message: {
@@ -47,11 +45,11 @@ const sendDocument = async (email, fileBuffer) => {
   <h2 style="color:rgb(0, 0, 0);">Welcome to SpokeIt!</h2>
   <p>Hi there,</p>
   <p>Thank you for registering with <strong>SpokeIt</strong>, our speech therapy app designed to make learning fun and engaging for kids.</p>
-  <p>As part of our onboarding process, we&apos;re sharing your signed consent form for your records. Please find the document attached to this email.</p>
+  <p>As part of our onboarding process, we&apos;re sharing your signed consent form for your records. You can download it using the link below:</p>
+  <p><a href="${fileUrl}" target="_blank" style="color: #007bff;">Download Consent Form (PDF)</a></p>
   <p>If you have any questions or need help, feel free to reply to this email.</p>
   <p>We&apos;re excited to have you on board!</p>
-  <p>Warm regards,<br>
-  The SpokeIt Team</p>
+  <p>Warm regards,<br>The SpokeIt Team</p>
   <hr style="margin-top: 20px; border: none; border-top: 1px solid #ccc;">
   <small style="color: #888;">This email was sent automatically. If you believe you received it in error, please contact our support team.</small>
 </div>`,
@@ -59,7 +57,7 @@ const sendDocument = async (email, fileBuffer) => {
 
 Thank you for registering with SpokeIt, our speech therapy app designed to make learning fun and engaging for kids.
 
-As part of our onboarding process, we're sharing your signed consent form for your records. Please find the document attached to this email.
+As part of our onboarding process, we're sharing your signed consent form for your records. You can download it here: ${fileUrl}
 
 If you have any questions or need help, feel free to reply to this email.
 
@@ -68,13 +66,7 @@ We're excited to have you on board!
 Warm regards,
 The SpokeIt Team
 
-This email was sent automatically. If you believe you received it in error, please contact our support team.`,
-        attachments: [{
-          filename: 'SpokeIt Consent Form.pdf',
-          content: base64Pdf,
-          encoding: 'base64',
-          contentType: 'application/pdf'
-        }]
+This email was sent automatically. If you believe you received it in error, please contact our support team.`
       }
     })
   } catch (error) {

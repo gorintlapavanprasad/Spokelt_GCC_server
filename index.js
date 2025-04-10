@@ -48,7 +48,7 @@ app.post('/document-generation', async (req, res) => {
     const fileName = `${name}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}.pdf`;
  
       const firebaseStorageUrl = await uploadPdfToFirebaseStorage(pdfBuffer, fileName);
-      await sendDocument(email, pdfBuffer);
+      await sendDocument(email, firebaseStorageUrl);
       res.send(`Document generated and uploaded successfully to: ${firebaseStorageUrl}`);
 
       // email pdfBuffer to user
