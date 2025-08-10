@@ -30,7 +30,7 @@ app.use((err, req, res, next) => {
 });
 
 app.post('/document-generation', async (req, res) => {
-  const { name, email, signature, date } = req.body;
+  const { name, email, signature, date,storage_folder } = req.body;
 
   if (!name || !date) {
     return res.status(400).send('Please provide all required fields');
@@ -47,9 +47,12 @@ app.post('/document-generation', async (req, res) => {
 
     const fileName = `${name}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()}.pdf`;
  
-      const firebaseStorageUrl = await uploadPdfToFirebaseStorage(pdfBuffer, fileName);
+      const firebaseStorageUrl = await uploadPdfToFirebaseStorage(pdfBuffer, fileName, storage_folder);
       await sendDocument(email, firebaseStorageUrl);
-      res.send(`Document generated and uploaded successfully to: ${firebaseStorageUrl}`);
+      res.status(200).json({
+        message: "Document generated and uploaded successfully.",
+        signedUrl: firebaseStorageUrl // This key matches what your front-end expects
+      });
 
       // email pdfBuffer to user
  
