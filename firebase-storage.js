@@ -3,10 +3,10 @@ const admin = require('./firebase-utils'); // Import the admin instance
 const bucket = admin.storage().bucket();
 const CONSENT_FORM_FOLDER = 'PlayerConsentForms'; // Define the folder as a constant
 
-async function uploadPdfToFirebaseStorage(pdfBuffer, fileName) {
+async function uploadPdfToFirebaseStorage(pdfBuffer, fileName,storage_folder=CONSENT_FORM_FOLDER) {
   try {
     // Construct the file path using the constant folder name
-    const filePath = `${CONSENT_FORM_FOLDER}/${fileName}`;
+    const filePath = `${storage_folder}/${fileName}`;
     const file = bucket.file(filePath);
 
     await file.save(pdfBuffer, {
