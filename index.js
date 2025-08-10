@@ -51,7 +51,7 @@ app.post('/document-generation', async (req, res) => {
       await sendDocument(email, firebaseStorageUrl);
       res.status(200).json({
         message: "Document generated and uploaded successfully.",
-        signedUrl: firebaseStorageUrl // This key matches what your front-end expects
+        signedUrl: firebaseStorageUrl 
       });
 
       // email pdfBuffer to user
@@ -79,3 +79,4 @@ app.use((req, res, next) => {
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
+
